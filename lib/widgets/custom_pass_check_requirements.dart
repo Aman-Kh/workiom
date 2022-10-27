@@ -45,31 +45,32 @@ class CustomPassCheckRequirements extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 3.5),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
         children: [
           /// requirement IconData based on check!
           requirementText == "Not enough strong" ?
           (
           passwordStrength < 3/5 ?
-          const Icon(CupertinoIcons.xmark, size:18,color: Colors.red):
+          const Icon(CupertinoIcons.xmark, size:13,color: Colors.red):
           passwordStrength == 3/5  ||  passwordStrength == 4/5?
-          const Icon(Icons.warning, color: Colors.orange):
-          const Icon(Icons.done, color: Colors.green))
+          const Icon(Icons.warning, color: Colors.orange,size:14):
+          const Icon(Icons.done, color: Colors.green,size:14))
           :passCheck!
-              ? const Icon(Icons.done, color: Colors.green):
-                const Icon(CupertinoIcons.xmark, size:18,color: Colors.red),
-          const SizedBox(width: 2.0),
+              ? const Icon(Icons.done, color: Colors.green,size:14):
+                const Icon(CupertinoIcons.xmark, size:13,color: Colors.red),
+          const SizedBox(width: 5.0),
           /// requirement text
-          Text(
-            requirementText!,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: passCheck! ? activeColor : inActiveColor,
-            ).copyWith(fontWeight: requirementText == "Not enough strong" ? FontWeight.bold:
-                       FontWeight.normal),
+          Flexible(
+            child: Text(
+              requirementText!,
+              softWrap: true,
+              style: TextStyle(
+                color: passCheck! ? activeColor : inActiveColor,
+              ).copyWith(fontWeight: requirementText == "Not enough strong" ? FontWeight.bold:
+                         FontWeight.normal,
+              fontSize: requirementText == "Not enough strong" ? 13 : 11 ),
+            ),
           )
         ],
       ),

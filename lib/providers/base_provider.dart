@@ -8,4 +8,11 @@ class BaseProvider with ChangeNotifier{
     _isBusy = busy;
     notifyListeners();
   }
+
+  String _errorText = '';
+  String get errorText => _errorText;
+  void setErrorText(String newText) {
+    _errorText = newText;
+    notifyListeners();
+  }
 }

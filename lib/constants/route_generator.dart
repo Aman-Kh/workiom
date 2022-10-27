@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_projects/views/home_view.dart';
 import 'package:flutter_projects/views/signup_view.dart';
 import 'package:flutter_projects/views/signup_workspace_view.dart';
 import 'package:flutter_projects/views/welcome_view.dart';
@@ -24,6 +25,11 @@ class RouteGenerator extends NavigatorObserver {
       case RouteNames.welcomeView:
         var r =
         MaterialPageRoute(builder: (_) => WelcomeView(), settings: settings);
+        addToStack(r);
+        return r;
+      case RouteNames.homeView:
+        var r =
+        MaterialPageRoute(builder: (_) => const HomeView(), settings: settings);
         addToStack(r);
         return r;
       default:
@@ -118,6 +124,7 @@ class RouteNames {
   static const signUpView = '/signup_view';
   static const signUpWorkSpaceView = '/signup_workspace_view';
   static const welcomeView = '/welcome_view';
+  static const homeView ='/home_view';
  }
 
 class CustomMaterialRoute extends MaterialPageRoute {

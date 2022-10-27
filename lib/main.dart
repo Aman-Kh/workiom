@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_projects/constants/route_generator.dart';
+import 'package:flutter_projects/providers/base_provider.dart';
 import 'package:flutter_projects/providers/user_provider.dart';
 import 'package:flutter_projects/providers/workspace_provider.dart';
 import 'package:flutter_projects/views/welcome_view.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<BaseProvider>(create: (_) => BaseProvider()),
         ChangeNotifierProvider<WorkSpaceProvider>(create: (_) => WorkSpaceProvider()),
       ],
       child: MaterialApp(

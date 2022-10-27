@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_projects/constants/constants.dart';
 import 'package:flutter_projects/models/password_settings.dart';
+import 'package:flutter_projects/providers/workspace_provider.dart';
 import 'package:flutter_projects/widgets/custom_pass_check_requirements.dart';
+import 'package:provider/provider.dart';
 
 class CustomPasswordValidatedFields extends StatefulWidget {
   /// Password `validation` is given at the bottom which can be `modified` accordingly.
@@ -101,7 +103,7 @@ class _CustomPasswordValidatedFieldsState extends State<CustomPasswordValidatedF
             textInputAction: widget.textInputAction,
             controller: widget.textEditingController,
             keyboardType: TextInputType.text,
-            obscureText: true,
+            obscureText: context.read<WorkSpaceProvider>().showPassSignIn,
             decoration: widget.inputDecoration,
             onEditingComplete: widget.onEditComplete,
             onFieldSubmitted: widget.onFieldSubmitted,
@@ -161,7 +163,7 @@ class _CustomPasswordValidatedFieldsState extends State<CustomPasswordValidatedF
             child: CustomPassCheckRequirements(
               passwordStrength: 0.0 ,
               passCheck:  RegExp(r'[A-Z]').hasMatch(_pass),
-              requirementText: "Password must have at least one uppercase [A-Z]",
+              requirementText: "Passwords must have at least one uppercase [A-Z]",
               activeColor: widget.activeRequirementColor,
               inActiveColor: widget.inActiveRequirementColor,
               inActiveIcon: widget.inActiveIcon,
@@ -176,7 +178,7 @@ class _CustomPasswordValidatedFieldsState extends State<CustomPasswordValidatedF
             child: CustomPassCheckRequirements(
               passwordStrength: 0.0 ,
               passCheck: RegExp(r'[a-z]').hasMatch(_pass),
-              requirementText: "Password must have at least one lowercase [a-z]",
+              requirementText: "Passwords must have at least one lowercase [a-z]",
               activeColor: widget.activeRequirementColor,
               inActiveColor: widget.inActiveRequirementColor,
               inActiveIcon: widget.inActiveIcon,
@@ -193,7 +195,7 @@ class _CustomPasswordValidatedFieldsState extends State<CustomPasswordValidatedF
               passCheck: widget.passwordSettings != null &&
                          widget.passwordSettings!.requireDigit! &&
                          RegExp(r'[0-9]').hasMatch(_pass),
-              requirementText: "Password must have at least one digit [0-9]",
+              requirementText: "Passwords must have at least one digit [0-9]",
               activeColor: widget.activeRequirementColor,
               inActiveColor: widget.inActiveRequirementColor,
               inActiveIcon: widget.inActiveIcon,
@@ -208,7 +210,7 @@ class _CustomPasswordValidatedFieldsState extends State<CustomPasswordValidatedF
             child: CustomPassCheckRequirements(
               passwordStrength: 0.0 ,
               passCheck:RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(_pass),
-              requirementText: "Password must have at least one special",
+              requirementText: "Passwords must have at least one special",
               activeColor: widget.activeRequirementColor,
               inActiveColor: widget.inActiveRequirementColor,
               inActiveIcon: widget.inActiveIcon,
@@ -223,7 +225,7 @@ class _CustomPasswordValidatedFieldsState extends State<CustomPasswordValidatedF
             child: CustomPassCheckRequirements(
               passwordStrength: 0.0 ,
               passCheck: _pass.length >= widget.passwordSettings!.requiredLength!,
-              requirementText: "Password must have ${widget.passwordSettings!.requiredLength!} characters minimum",
+              requirementText: "Passwords must have ${widget.passwordSettings!.requiredLength!} characters minimum",
               activeColor: widget.activeRequirementColor,
               inActiveColor: widget.inActiveRequirementColor,
               inActiveIcon: widget.inActiveIcon,
@@ -245,7 +247,6 @@ class _CustomPasswordValidatedFieldsState extends State<CustomPasswordValidatedF
   /// In case you want to `modify` the requirements change the `RegExp` given below
   String? passwordValidation(String? value) {
     print("passwordValidation");
-    bool passValid = true;
     var settings = widget.passwordSettings;
     if (value!.isEmpty) {
       setState(() {
@@ -273,9 +274,10 @@ class _CustomPasswordValidatedFieldsState extends State<CustomPasswordValidatedF
              : ((isRequireDigits && digitsRegex.hasMatch(value)) || !isRequireDigits) && ((isRequireLowercase && lowerCaseRegex.hasMatch(value)) || !isRequireLowercase) && ((isRequireNonAlphanumeric && nonAlphanumericRegex.hasMatch(value)) || !isRequireNonAlphanumeric)  &&  ((isRequireUppercase && upperCaseRegex.hasMatch(value)) || !isRequireUppercase)? 4/5:
                ((isRequireDigits && digitsRegex.hasMatch(value)) || !isRequireDigits) && ((isRequireLowercase && lowerCaseRegex.hasMatch(value)) || !isRequireLowercase) && ((isRequireNonAlphanumeric && nonAlphanumericRegex.hasMatch(value)) || !isRequireNonAlphanumeric)  &&  ((isRequireUppercase && upperCaseRegex.hasMatch(value)) || !isRequireUppercase) && (requireLength! <= value.length)? 5/5:
                4/5;
+        print(passwordStrength);
+
       });
-print(passwordStrength);
-print(passValid);
+     print(passValid);
       if(passValid){            // regular expression to check password valid or not
         setState(() {
           passwordStrength = 5 / 5;
